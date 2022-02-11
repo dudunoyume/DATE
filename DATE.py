@@ -135,12 +135,12 @@ def main():
     #split_icon = input("/")
 
     date_c = DATin(path, colname)  # 進入DATin 運算，創造轉型後data
-    date_output_form = DATout(date_c.pickup(), ".", "民國年")
+    date_output_form = DATout(date_c.pickup(), "年月日", "民國年")
 
     date_output = date_c.df_origin()
     date_output[colname] = date_output_form.combine()
 
-    print(date_output)
+    date_output.to_excel("d:\date\活頁簿2.xlsx")
 
 
 if __name__ == '__main__':
