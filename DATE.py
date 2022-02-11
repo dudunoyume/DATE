@@ -1,10 +1,9 @@
-import os
+
 from tkinter.tix import InputOnly
 from xml.sax import default_parser_list
 import numpy as np
 import pandas as pd
 import re
-import time
 
 
 class DATin(object):

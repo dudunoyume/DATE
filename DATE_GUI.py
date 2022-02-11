@@ -22,7 +22,7 @@ class DAT():
         canvas = tk.Canvas(self.window, width=150, height=400, bg="black")
         # 圖檔位置 # 必須為全局變量 不然會消失
         #global image_file
-        self.image_file = tk.PhotoImage(file='shishiro.png')
+        self.image_file = tk.PhotoImage(file='./shishiro.png')
         # 圖的錨定點
         #global image
         self.image = canvas.create_image(
