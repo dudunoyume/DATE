@@ -28,7 +28,7 @@ class DAT():
         self.image = canvas.create_image(
             75, 0, anchor="n", image=self.image_file)
         canvas.pack(side="left")
-        tk.Label(self.window, text='獅白牡丹歡迎你', font=('標楷體', 16)).pack()
+        tk.Label(self.window, text='獅白嘲笑你很忙', font=('標楷體', 16)).pack()
         # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         # key 入資料位置   ## 1.輸入檔案位置 2.日期欄位 3.輸出分隔式 4.輸出年分民國OR 西元  5.輸出檔案位置
