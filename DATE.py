@@ -11,7 +11,11 @@ class DATin(object):
     def __init__(self, path, colname):
         self._path = path
         self._colname = colname  # 日期的欄位
-        self.dfold = pd.read_excel(self._path, header=0, sheet_name=0)
+        if self._path.endswith(".csv"):
+            self.dfold = pd.read_csv(self._path, encoding= "utf8")           
+        else:
+            self.dfold = pd.read_excel(self._path, header=0, sheet_name=0)
+            
 
     @property
     def path(self):
@@ -139,8 +143,9 @@ def main():
     date_output = date_c.df_origin()
     date_output[colname] = date_output_form.combine()
 
-    date_output.to_excel("d:\date\活頁簿2.xlsx")
+    date_output.to_excel("D:\Desktop\日期.xlsx")
 
 
 if __name__ == '__main__':
     main()
+    
