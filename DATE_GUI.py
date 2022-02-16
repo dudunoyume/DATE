@@ -105,6 +105,10 @@ class DAT():
             self.window, text="開始輸出", command=self.start_button, font=('標楷體', 12), width=30)
         self.start.place(x=160, y=370)
 
+        # 轉檔only
+        self.start = tk.Button(self.window, text="開始轉檔", command=self.transform_button, font=('標楷體', 12), width=10)
+        self.start.place(x=400, y=370)
+        
         # 在介面內循環-------------------------------------------------------------------------------------------------------------------------------------------------
         self.window.mainloop()
 
@@ -139,6 +143,25 @@ class DAT():
         date_output[colname] = date_output_form.combine()
 
         date_output.to_excel(path2, index=False)
+
+        result = tkinter.messagebox.showinfo(title='資訊提示！', message='完成')
+        
+    def transform_button(self):
+        path1 = self.path1.get()
+        path2 = self.path2.get()
+        print(path1)
+ 
+        if path1.endswith(".csv"):
+            date_output = pd.read_csv(path1, encoding= "utf8")
+        elif path1.endswith(".xlsx"):
+            date_output = pd.read_excel(path1, header=0, sheet_name=0)      
+       
+
+  
+        if path2.endswith(".csv"):
+            date_output.to_csv(path2, encoding= "utf8")
+        elif path2.endswith(".xlsx"):
+            date_output.to_excel(path2, index=False)
 
         result = tkinter.messagebox.showinfo(title='資訊提示！', message='完成')
 
