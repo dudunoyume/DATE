@@ -4,6 +4,7 @@ from xml.sax import default_parser_list
 import numpy as np
 import pandas as pd
 import re
+import chardet
 
 
 class DATin(object):
@@ -12,10 +13,12 @@ class DATin(object):
         self._path = path
         self._colname = colname  # 日期的欄位
         if self._path.endswith(".csv"):
-            self.dfold = pd.read_csv(self._path, encoding= "utf8")           
+            f = open(self._path, "rb")  # 判斷字元
+            data = f.read()
+            self.dfold = pd.read_csv(
+                self._path, encoding=chardet.detect(data)["encoding"])
         else:
             self.dfold = pd.read_excel(self._path, header=0, sheet_name=0)
-            
 
     @property
     def path(self):
@@ -148,4 +151,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
