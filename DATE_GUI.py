@@ -22,13 +22,13 @@ class DAT(object):
         canvas = tk.Canvas(self.window, width=150, height=400, bg="black")
         # 圖檔位置 # 必須為全局變量 不然會消失
         #global image_file
-        self.image_file = tk.PhotoImage(file="./shishiro.png")
+        self.image_file = tk.PhotoImage(file="./pic.png")
         # 圖的錨定點
         #global image
         self.image = canvas.create_image(
             75, 0, anchor="n", image=self.image_file)
         canvas.pack(side="left")
-        tk.Label(self.window, text='獅白嘲笑你很忙', font=('標楷體', 16)).pack()
+        tk.Label(self.window, text='日期轉換程式', font=('標楷體', 16)).pack()
         # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         # key 入資料位置   ## 1.輸入檔案位置 2.日期欄位 3.輸出分隔式 4.輸出年分民國OR 西元  5.輸出檔案位置
@@ -62,7 +62,7 @@ class DAT(object):
 
         # 日期欄位名文字框-------------------------------------------------------------------------------------------------------------------------------------------------
         self.datecol = tk.StringVar()
-        self.datecol.set('日期')
+        self.datecol.set('eventDate')
         self.entry_datecol = tk.Entry(
             self.window, textvariable=self.datecol, font=('標楷體', 12), width=30)
         self.entry_datecol.place(x=160, y=130)
