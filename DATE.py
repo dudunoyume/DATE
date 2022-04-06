@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import re
 import chardet
-
+from datetime import datetime
 
 class DATin(object):
 
@@ -41,56 +41,86 @@ class DATin(object):
         for i in datlist:
             YMD = ["", "", ""]
             i = str(i)
-            """前兩個數字的大小來判斷"""
-            if int(i[0:2]) < 17:
-                """轉換百位民國年(100年後)為西元年"""
-                i = str(1911+int(i[0:3]))+i[3:]
-
-            elif int(i[0:2]) > 21:
-                """轉換十位民國年(99年前)為西元年"""
-                i = str(1911+int(i[0:2]))+i[2:]
-
-            """判斷有無轉分割符號>>>>年月日,/\-."""
-            if re.search(iconlist, i):
-                i = re.sub(r"[日]", "", i)  # 先去除 日 避免造成多出的空格
-                YMD = re.split(iconlist, i)
-                if len(YMD) < 3:
-                    YMD.append("")
-                """輸出日月年的"""
-                """若日月為個位數則加0"""
-                if len(YMD[1]) == 1:
-                    YMD[1] = "0"+YMD[1]
-                if len(YMD[2]) == 1:
-                    YMD[2] = "0"+YMD[2]
-
-            if YMD[0] == "":
-                YMD[0] = i[0:4]
-                # 先寫入年分後一字元長度判斷格式
-                # 完整八碼
-                if len(i) == 8:
-                    YMD[1] = i[4:6]
-                    YMD[2] = i[6:]
-                # 僅六碼
-                elif len(i) == 6:
-                    if int(i[4:6]) <= 12:
-                        YMD[1] = i[4:6]
-                    else:
-                        YMD[1] = "0"+i[4]
-                        YMD[2] = "0"+i[5]
-                elif len(i) == 5:
-                    YMD[1] = "0"+i[4]
-                # 有七碼
+            
+            try:
+                # 判斷是否可轉為數字
+                i = int(i)
+                # 判斷是否為excel 日期數字
+                
+                if i <60000 and i >30000:
+                    dt = datetime.fromordinal(datetime(1900, 1, 1).toordinal() + i - 2)                    
+                    tt = dt.timetuple()
+                    
+                    YMD= [str(tt.tm_year),str(tt.tm_mon),str(tt.tm_mday)]
+                    if len(YMD[1]) == 1:
+                        YMD[1] = "0"+YMD[1]
+                    if len(YMD[2]) == 1:
+                        YMD[2] = "0"+YMD[2]
+                    
+                
+                # 為單純年月日的形式
                 else:
-                    if i[4] != "1":
+                    i = str(i)
+                    if int(i[0:2]) < 17:
+                        """轉換百位民國年(100年後)為西元年"""
+                        i = str(1911+int(i[0:3]))+i[3:]
+
+                    elif int(i[0:2]) > 21:
+                        """轉換十位民國年(99年前)為西元年"""
+                        i = str(1911+int(i[0:2]))+i[2:]
+                        
+                    YMD[0] = i[0:4]
+                    
+                    if len(i) == 8:
+                        YMD[1] = i[4:6]
+                        YMD[2] = i[6:]
+                    # 僅六碼
+                    elif len(i) == 6:
+                        if int(i[4:6]) <= 12:
+                            YMD[1] = i[4:6]
+                        else:
+                            YMD[1] = "0"+i[4]
+                            YMD[2] = "0"+i[5]
+                    elif len(i) == 5:
                         YMD[1] = "0"+i[4]
-                        YMD[2] = i[5:7]
+                    # 有七碼
                     else:
-                        # 無法判別時加上error
-                        YMD[1] = i[4:7]
-                        YMD[2] = "error"
+                        if i[4] != "1":
+                            YMD[1] = "0"+i[4]
+                            YMD[2] = i[5:7]
+                        else:
+                            # 無法判別時加上error
+                            YMD[1] = i[4:7]
+                            YMD[2] = "error"
+                
 
+            except:
+            # 有分隔符號的形式----------------------------------------------------------------------
+            # 前置更換 西元 民國 前兩個數字的大小來判斷
+                if int(i[0:2]) < 17:
+                    """轉換百位民國年(100年後)為西元年"""
+                    i = str(1911+int(i[0:3]))+i[3:]
+
+                elif int(i[0:2]) > 21:
+                    """轉換十位民國年(99年前)為西元年"""
+                    i = str(1911+int(i[0:2]))+i[2:]
+
+                """判斷有無轉分割符號>>>>年月日,/\-."""
+                if re.search(iconlist, i):
+                    i = re.sub(r"[日]", "", i)  # 先去除 日 避免造成多出的空格
+                    YMD = re.split(iconlist, i)
+                    if len(YMD) < 3:
+                        YMD.append("")
+                    """輸出日月年的"""
+                    """若日月為個位數則加0"""
+                    if len(YMD[1]) == 1:
+                        YMD[1] = "0"+YMD[1]
+                    if len(YMD[2]) == 1:
+                        YMD[2] = "0"+YMD[2]
+                        
+                
             datedf.loc[n, ] = YMD
-
+   
             n += 1
         # 輸出年月日的dataframe
         return datedf
@@ -151,3 +181,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+# D:\Desktop\date_test.xlsx   
+# date
