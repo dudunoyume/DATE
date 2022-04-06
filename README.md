@@ -1,9 +1,9 @@
-#日期小功具下載區
+# 日期小功具下載區
 https://1drv.ms/u/s!AlyFLw1mrAD_uhzGeYhYMJJyvqia?e=QWuvZg
 
 
 
-#使用說明
+# 使用說明
 輸入檔案 點選需要轉換的程式 預設為 Excel 檔，可選擇csv檔
 
 日期欄位名 : 輸入檔案內日期的欄位名 預設為 eventDate
@@ -18,5 +18,5 @@ https://1drv.ms/u/s!AlyFLw1mrAD_uhzGeYhYMJJyvqia?e=QWuvZg
 注意: 若原始檔案的格式，為無分隔符號，日月有僅為單位數的，如:2018112、107102，可能會出現，日期後綴為 error 的
 
 
-###更新紀錄
+### 更新紀錄
 V1.3版 更新 轉換excel 日期數字 功能
